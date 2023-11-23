@@ -1,30 +1,54 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <TheNavigation />
+  <div class="container">
+    <!-- Sidebar -->
+    <router-view
+      v-slot="{ Component }"
+      class="view left-sidebar"
+      name="LeftSidebar"
+    >
+      <transition name="slide" mode="out-in">
+        <component :is="Component" :key="$route.path"></component>
+      </transition>
+    </router-view>
+    <!-- Main -->
+    <router-view v-slot="{ Component }" class="main-view">
+      <transition name="slide" mode="out-in">
+        <component :is="Component" :key="$route.path"></component>
+      </transition>
+    </router-view>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import TheNavigation from "@/components/TheNavigation.vue";
+
+export default {
+  components: { TheNavigation },
+};
+</script>
+
+<style lang="css" scoped>
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 0.5s, transform 0.1s;
 }
 
-nav {
-  padding: 30px;
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-30%);
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.container {
+  display: flex;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.left-sidebar {
+  widows: 20%;
+}
+
+.main-view {
+  widows: 100%;
 }
 </style>
