@@ -1,6 +1,5 @@
 # vue-routers-4
 vue router 4 Implementation
-# vue-school-travel-app
 
 ## Project setup
 ```
